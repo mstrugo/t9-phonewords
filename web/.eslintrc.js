@@ -4,10 +4,26 @@ const path = require('path');
 const prettierOptions = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'));
 
 module.exports = {
-  extends: ['prettier', 'eslint:recommended'],
+  env: {
+    commonjs: true,
+    node: true,
+    browser: true,
+    es6: true,
+    jest: true,
+  },
+  extends: ['prettier', 'eslint:recommended', 'plugin:react/recommended'],
   plugins: ['prettier'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2016,
+    sourceType: 'module',
+  },
   rules: {
     'prettier/prettier': ['error', prettierOptions],
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   overrides: [
     {
