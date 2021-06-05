@@ -11,8 +11,9 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  extends: ['prettier', 'eslint:recommended', 'plugin:react/recommended'],
-  plugins: ['prettier'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier'],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -21,6 +22,8 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'prettier/prettier': ['error', prettierOptions],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
@@ -28,7 +31,9 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.ts?(x)'],
-      rules: { 'prettier/prettier': ['warn', prettierOptions] },
+      rules: {
+        'prettier/prettier': ['warn', prettierOptions],
+      },
     },
   ],
 };

@@ -1,15 +1,24 @@
+import { KeyboardEvent } from 'react';
 import InputField from '@kiwicom/orbit-components/lib/InputField';
+import { forbiddenKeyCodes } from '../../utils';
 
-export const Input = () => (
-  <InputField
-    autoComplete="off"
-    dataAttrs={{
-      'data-recording-ignore': true,
-    }}
-    inlineLabel
-    label="Input"
-    onChange={() => undefined}
-    placeholder="Type at least 2 characters"
-    type="number"
-  />
-);
+export const Input = () => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (forbiddenKeyCodes.includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  return (
+    <InputField
+      autoComplete="off"
+      dataAttrs={{ 'data-recording-ignore': true }}
+      inlineLabel
+      label="Input"
+      onChange={() => undefined}
+      onKeyDown={handleKeyPress}
+      placeholder="Type or click buttons"
+      type="number"
+    />
+  );
+};

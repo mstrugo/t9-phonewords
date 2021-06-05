@@ -17,12 +17,13 @@ const StyledText = styled.span`
 
 interface DialerProps {
   disabled: boolean;
-  firstLine: string | number;
+  firstLine: number;
   secondLine?: string | null;
+  onClick: (value: number) => void;
 }
 
-export const DialerButton = ({ disabled, firstLine, secondLine }: DialerProps) => (
-  <Button type="primarySubtle" disabled={disabled}>
+export const DialerButton = ({ disabled, firstLine, secondLine, onClick }: DialerProps) => (
+  <Button type="primarySubtle" disabled={disabled} onClick={() => onClick(firstLine)}>
     <StyledText>{firstLine}</StyledText>
     <StyledText>{secondLine}</StyledText>
   </Button>
