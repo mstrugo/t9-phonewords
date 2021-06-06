@@ -9,7 +9,7 @@ const collectWords = (root: string[], words: string[], str = '', iteration = 0) 
   const pathLetters = root[iteration].split('');
 
   for (const letter of pathLetters) {
-    collectWords(root, words, str + letter, iteration++);
+    collectWords(root, words, str + letter, iteration + 1);
   }
 }
 

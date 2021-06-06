@@ -6,6 +6,7 @@
   "author": "Mariano Strugo <mariano.strugo@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.0"
@@ -15,6 +16,7 @@
     "dev": "nodemon --exec ts-node src/index.ts"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
     "@types/node": "^10.0.0",
     "eslint": "^7.28.0",

@@ -3,11 +3,12 @@ import Card, { CardSection } from '@kiwicom/orbit-components/lib/Card';
 import List, { ListItem } from '@kiwicom/orbit-components/lib/List';
 
 interface OutputProps {
+  loading: boolean;
   results: string[];
 }
 
-const Output = memo(({ results }: OutputProps) => (
-  <Card>
+const Output = memo(({ loading, results }: OutputProps) => (
+  <Card loading={loading}>
     <CardSection>
       <List>
         {results.map(res => (

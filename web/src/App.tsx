@@ -4,6 +4,7 @@ import Layout, { LayoutColumn } from '@kiwicom/orbit-components/lib/Layout';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Inputs, Output } from './components';
+import { getPhonewords } from './utils';
 
 const StyledAppWrapper = styled.div`
   margin: 20px;
@@ -18,11 +19,15 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const getResults = (query: string) => {
-    console.log('eff');
     if (!loading) {
-      console.log({ query });
       setLoading(true);
-      setResults([...results, 'test']);
+
+      getPhonewords(query)
+        .then(res => {
+          setResults(res.data.words);
+        })
+        .catch(err => console.log(err))
+        .finally(() => setLoading(false));
     }
   };
 
@@ -42,7 +47,7 @@ const App = () => {
           </Card>
         </LayoutColumn>
         <LayoutColumn>
-          <Output results={results} />
+          <Output loading={loading} results={results} />
         </LayoutColumn>
       </Layout>
     </StyledAppWrapper>
