@@ -2,6 +2,9 @@
   "name": "t9-phonewords-web",
   "version": "0.1.0",
   "private": true,
+  "description": "T9 - Phonewords Web App",
+  "author": "Mariano Strugo <mariano.strugo@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@kiwicom/orbit-components": "^0.115.0",
     "@testing-library/jest-dom": "^5.11.4",
