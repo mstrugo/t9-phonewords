@@ -11,22 +11,20 @@ const StyledGrid = styled(Grid)`
   }
 `;
 
-export const Dialer = () => {
-  const clickHandler = (value: number) => {
-    console.log(value);
-  };
+interface DialerProps {
+  onClick: (v: number) => void;
+}
 
-  return (
-    <StyledGrid columnGap="20px" columns="repeat(3, minmax(40px, 1fr))" rows="repeat(4, 60px)">
-      {dialerNumbers.map(n => (
-        <DialerButton
-          key={n}
-          disabled={!dialerLetters[n - 1]}
-          firstLine={n}
-          secondLine={dialerLetters[n - 1]}
-          onClick={clickHandler}
-        />
-      ))}
-    </StyledGrid>
-  );
-};
+export const Dialer = ({ onClick }: DialerProps) => (
+  <StyledGrid columnGap="20px" columns="repeat(3, minmax(40px, 1fr))" rows="repeat(4, 60px)">
+    {dialerNumbers.map(n => (
+      <DialerButton
+        key={n}
+        disabled={!dialerLetters[n - 1]}
+        firstLine={n}
+        secondLine={dialerLetters[n - 1]}
+        onClick={() => onClick(n)}
+      />
+    ))}
+  </StyledGrid>
+);
