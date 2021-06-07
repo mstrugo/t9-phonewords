@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express from 'express';
+import express, { Response, Request } from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { resolvers } from './resolvers';
 import { schemas } from './schemas';
@@ -9,8 +9,8 @@ const port = process.env.PORT || 4000;
 
 app.use(cors())
 
-app.use("*", (_, res) => {
-  res.send("<h1>Welcome!</h1>");
+app.use("*", (_: Request, res: Response) => {
+  res.send("<h1>Forbidden!</h1>");
 });
 
 app.use('/graphql', graphqlHTTP({
