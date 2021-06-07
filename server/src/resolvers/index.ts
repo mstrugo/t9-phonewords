@@ -15,6 +15,11 @@ const collectWords = (root: string[], words: string[], str = '', iteration = 0) 
 
 const resolveWords = (term: string) => {
   const words: string[] = [];
+
+  if (term.includes('1') || term.includes('0')) {
+    return [];
+  }
+
   const chars = term.split('').map(letter => letters[parseInt(letter, 10) - 2]); // 0 and 1 are not allowed
 
   collectWords(chars, words);
