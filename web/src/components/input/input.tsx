@@ -1,5 +1,7 @@
 import { KeyboardEvent } from 'react';
+import { Remove } from '@kiwicom/orbit-components/icons';
 import InputField from '@kiwicom/orbit-components/lib/InputField';
+import ButtonLink from '@kiwicom/orbit-components/lib/ButtonLink';
 import { forbiddenKeyCodes } from '../../utils';
 
 interface InputProps {
@@ -20,6 +22,8 @@ export const Input = ({ val, onChange }: InputProps) => {
     onChange(e.target.value);
   };
 
+  const handleClear = () => onChange('');
+
   return (
     <InputField
       autoComplete="off"
@@ -28,7 +32,10 @@ export const Input = ({ val, onChange }: InputProps) => {
       label="Input"
       onChange={handleOnChange}
       onKeyDown={handleKeyPress}
-      placeholder="Type or click buttons"
+      suffix={
+        <ButtonLink compact iconLeft={<Remove />} onClick={handleClear} size="small" type="critical" title="Clear" />
+      }
+      placeholder="Only numbers 2-9"
       type="number"
       value={val}
     />

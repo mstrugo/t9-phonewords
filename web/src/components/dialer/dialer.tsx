@@ -1,3 +1,5 @@
+import { ChevronDoubleLeft } from '@kiwicom/orbit-components/icons';
+import Button from '@kiwicom/orbit-components/lib/Button';
 import Grid from '@kiwicom/orbit-components/lib/utils/Grid';
 import styled from 'styled-components';
 import { dialerLetters, dialerNumbers } from '../../utils';
@@ -6,7 +8,7 @@ import { DialerButton } from '../dialer-button';
 const StyledGrid = styled(Grid)`
   justify-content: center;
 
-  button:last-of-type {
+  button:nth-child(10) {
     grid-column-start: 2;
   }
 `;
@@ -26,5 +28,12 @@ export const Dialer = ({ onClick }: DialerProps) => (
         onClick={() => onClick(n)}
       />
     ))}
+    <Button
+      iconLeft={<ChevronDoubleLeft />}
+      onClick={() => onClick(-1)}
+      title="Remove last character"
+      type="secondary"
+      fullWidth
+    />
   </StyledGrid>
 );

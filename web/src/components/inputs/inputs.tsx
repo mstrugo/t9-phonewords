@@ -10,20 +10,33 @@ const StyledBox = styled(Box)`
 
 interface InputsProps {
   searchAction: (value: string) => void;
+  clearResultsAction: () => void;
 }
 
-export const Inputs = ({ searchAction }: InputsProps) => {
+export const Inputs = ({ searchAction, clearResultsAction }: InputsProps) => {
   const [value, setValue] = useState('');
 
   const changeHandler = (v: string) => {
     setValue(v);
 
-    if (v.length > 1) {
+    if (v.length > 0) {
       searchAction(v);
+    } else {
+      clearResultsAction();
     }
   };
 
-  const clickHandler = (v: number) => changeHandler(`${value}${v}`);
+  const clickHandler = (v: number) => {
+    let newVal;
+
+    if (v > 0) {
+      newVal = `${value}${v}`;
+    } else {
+      newVal = value.substring(0, value.length - 1);
+    }
+
+    changeHandler(newVal);
+  };
 
   return (
     <StyledBox align="center" display="flex" wrap="wrap">

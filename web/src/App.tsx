@@ -14,8 +14,10 @@ const StyledHeadingWrapper = styled.div`
   padding: 20px;
 `;
 
+const defaultResult = ['Start typing...'];
+
 const App = () => {
-  const [results, setResults] = useState<string[]>([]);
+  const [results, setResults] = useState<string[]>(defaultResult);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getResults = (query: string) => {
@@ -31,6 +33,8 @@ const App = () => {
     }
   };
 
+  const clearResults = () => setResults(defaultResult);
+
   return (
     <StyledAppWrapper>
       <StyledHeadingWrapper>
@@ -42,7 +46,7 @@ const App = () => {
         <LayoutColumn>
           <Card>
             <CardSection>
-              <Inputs searchAction={getResults} />
+              <Inputs searchAction={getResults} clearResultsAction={clearResults} />
             </CardSection>
           </Card>
         </LayoutColumn>
