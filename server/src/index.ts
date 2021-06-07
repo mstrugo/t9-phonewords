@@ -10,6 +10,10 @@ const port = getEnvironmentPort();
 
 app.use(cors())
 
+app.use("*", (_, res) => {
+  res.send("<h1>Welcome!</h1>");
+});
+
 app.use('/graphql', graphqlHTTP({
   graphiql: true,
   rootValue: resolvers,
