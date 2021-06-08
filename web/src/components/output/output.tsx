@@ -3,7 +3,7 @@ import { Check } from '@kiwicom/orbit-components/icons';
 import Card, { CardSection } from '@kiwicom/orbit-components/lib/Card';
 import { ListItem } from '@kiwicom/orbit-components/lib/List';
 import Pagination from '@kiwicom/orbit-components/lib/Pagination';
-import { useQuery } from 'micro-graphql-react';
+import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import { query } from '../../graphql';
 import { useInputsContext } from '../inputs-context';
@@ -31,13 +31,17 @@ const StyledList = styled.ul`
   padding: 0;
 `;
 
-interface QueryDataResponse {
+interface QueryData {
   words: string[];
+}
+
+interface QueryVariables {
+  term: string;
 }
 
 const Output = memo(({ paginateAt = DEFAULT_PAGINATION_AMOUNT }: OutputProps) => {
   const { value } = useInputsContext();
-  const { loaded, data } = useQuery<QueryDataResponse>(query, { term: value });
+  const { loading, error, data } = useQuery<QueryData, QueryVariables>(query, { variables: { term: value } });
 
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
@@ -61,24 +65,28 @@ const Output = memo(({ paginateAt = DEFAULT_PAGINATION_AMOUNT }: OutputProps) =>
   return (
     <Card>
       <CardSection>
-        <StyledCardSection>
-          <StyledList>
-            {loaded && subset[0] !== '' ? (
-              subset.map(res => (
-                <ListItem key={res} icon={<Check color="tertiary" size="small" />}>
-                  {res} -
-                </ListItem>
-              ))
-            ) : (
-              <ListItem>Start typing...</ListItem>
+        {error ? (
+          'Oops! Something went wrong! Please try again!'
+        ) : (
+          <StyledCardSection>
+            <StyledList>
+              {!loading && subset[0] !== '' ? (
+                subset.map(res => (
+                  <ListItem key={res} icon={<Check color="tertiary" size="small" />}>
+                    {res} -
+                  </ListItem>
+                ))
+              ) : (
+                <ListItem>Start typing...</ListItem>
+              )}
+            </StyledList>
+            {totalPages > 1 && (
+              <StyledPaginationWrapper>
+                <Pagination onPageChange={handleChange} pageCount={totalPages} selectedPage={page} size="normal" />
+              </StyledPaginationWrapper>
             )}
-          </StyledList>
-          {totalPages > 1 && (
-            <StyledPaginationWrapper>
-              <Pagination onPageChange={handleChange} pageCount={totalPages} selectedPage={page} size="normal" />
-            </StyledPaginationWrapper>
-          )}
-        </StyledCardSection>
+          </StyledCardSection>
+        )}
       </CardSection>
     </Card>
   );

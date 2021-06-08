@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('Main app', () => {
-  it('Renders the `Heading 1` title', () => {
+  it('Renders the app and `Heading 1` title', () => {
     render(<App />);
     const titleElement = screen.getByRole('heading');
 
@@ -87,18 +87,6 @@ describe('Main app', () => {
       userEvent.type(inputElement, '7887');
       const updatedInput = screen.getByDisplayValue('7887');
       expect(inputElement).toBe(updatedInput);
-    });
-
-    it('Update the `output` when the `input` change', () => {
-      render(<App />);
-
-      const outputInitialElement = screen.getByText('Start typing...');
-      expect(outputInitialElement).toBeInTheDocument();
-
-      const inputElement = screen.getByPlaceholderText('Only numbers 2-9');
-      userEvent.type(inputElement, '78');
-
-      expect(outputInitialElement).not.toBeInTheDocument();
     });
   });
 });
