@@ -3,13 +3,11 @@ import { Remove } from '@kiwicom/orbit-components/icons';
 import InputField from '@kiwicom/orbit-components/lib/InputField';
 import ButtonLink from '@kiwicom/orbit-components/lib/ButtonLink';
 import { forbiddenKeyCodes } from '../../utils';
+import { useInputsContext } from '../inputs-context';
 
-interface InputProps {
-  val: string;
-  onChange: (v: string) => void;
-}
+export const Input = () => {
+  const { value, actions } = useInputsContext();
 
-export const Input = ({ val, onChange }: InputProps) => {
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (forbiddenKeyCodes.includes(e.key)) {
       e.preventDefault();
@@ -19,10 +17,10 @@ export const Input = ({ val, onChange }: InputProps) => {
   // Should be SyntheticEvent<HTMLInputElement, Event>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnChange = (e: any) => {
-    onChange(e.target.value);
+    actions.changeHandler(e.target.value);
   };
 
-  const handleClear = () => onChange('');
+  const handleClear = () => actions.clearHandler();
 
   return (
     <InputField
@@ -37,7 +35,7 @@ export const Input = ({ val, onChange }: InputProps) => {
       }
       placeholder="Only numbers 2-9"
       type="number"
-      value={val}
+      value={value}
     />
   );
 };

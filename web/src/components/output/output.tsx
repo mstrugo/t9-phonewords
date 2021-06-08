@@ -3,11 +3,12 @@ import { Check } from '@kiwicom/orbit-components/icons';
 import Card, { CardSection } from '@kiwicom/orbit-components/lib/Card';
 import { ListItem } from '@kiwicom/orbit-components/lib/List';
 import Pagination from '@kiwicom/orbit-components/lib/Pagination';
+import { useQuery } from 'micro-graphql-react';
 import styled from 'styled-components';
+import { query } from '../../graphql';
+import { useInputsContext } from '../inputs-context';
 
 interface OutputProps {
-  loading: boolean;
-  results: string[];
   paginateAt?: number;
 }
 
@@ -30,7 +31,14 @@ const StyledList = styled.ul`
   padding: 0;
 `;
 
-const Output = memo(({ loading, results, paginateAt = DEFAULT_PAGINATION_AMOUNT }: OutputProps) => {
+interface QueryDataResponse {
+  words: string[];
+}
+
+const Output = memo(({ paginateAt = DEFAULT_PAGINATION_AMOUNT }: OutputProps) => {
+  const { value } = useInputsContext();
+  const { loaded, data } = useQuery<QueryDataResponse>(query, { term: value });
+
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
 
@@ -39,27 +47,31 @@ const Output = memo(({ loading, results, paginateAt = DEFAULT_PAGINATION_AMOUNT 
   useEffect(() => {
     let pagesNeeded = 0;
 
-    if (results.length > paginateAt) {
-      pagesNeeded = Math.round(results.length / paginateAt);
+    if (data && data.words.length > paginateAt) {
+      pagesNeeded = Math.round(data.words.length / paginateAt);
     }
 
     setTotalPages(pagesNeeded);
     setPage(1);
-  }, [results]);
+  }, [data]);
 
   const index = (page - 1) * paginateAt;
-  const subset = results.slice(index, index + paginateAt);
+  const subset = data ? data.words.slice(index, index + paginateAt) : [];
 
   return (
-    <Card loading={loading}>
+    <Card>
       <CardSection>
         <StyledCardSection>
           <StyledList>
-            {subset.map(res => (
-              <ListItem key={res} icon={<Check color="tertiary" size="small" />}>
-                {res}
-              </ListItem>
-            ))}
+            {loaded && subset[0] !== '' ? (
+              subset.map(res => (
+                <ListItem key={res} icon={<Check color="tertiary" size="small" />}>
+                  {res} -
+                </ListItem>
+              ))
+            ) : (
+              <ListItem>Start typing...</ListItem>
+            )}
           </StyledList>
           {totalPages > 1 && (
             <StyledPaginationWrapper>

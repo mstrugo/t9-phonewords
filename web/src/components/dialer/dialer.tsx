@@ -4,6 +4,7 @@ import Grid from '@kiwicom/orbit-components/lib/utils/Grid';
 import styled from 'styled-components';
 import { dialerLetters, dialerNumbers } from '../../utils';
 import { DialerButton } from '../dialer-button';
+import { useInputsContext } from '../inputs-context';
 
 const StyledGrid = styled(Grid)`
   justify-content: center;
@@ -13,27 +14,29 @@ const StyledGrid = styled(Grid)`
   }
 `;
 
-interface DialerProps {
-  onClick: (v: number) => void;
-}
+export const Dialer = () => {
+  const { value, actions } = useInputsContext();
 
-export const Dialer = ({ onClick }: DialerProps) => (
-  <StyledGrid columnGap="20px" columns="repeat(3, minmax(40px, 1fr))" rows="repeat(4, 60px)">
-    {dialerNumbers.map(n => (
-      <DialerButton
-        key={n}
-        disabled={!dialerLetters[n - 1]}
-        firstLine={n}
-        secondLine={dialerLetters[n - 1]}
-        onClick={() => onClick(n)}
+  const clickHandler = (v: number) => actions.changeHandler(`${value}${v}`);
+
+  return (
+    <StyledGrid columnGap="20px" columns="repeat(3, minmax(40px, 1fr))" rows="repeat(4, 60px)">
+      {dialerNumbers.map(n => (
+        <DialerButton
+          key={n}
+          disabled={!dialerLetters[n - 1]}
+          firstLine={n}
+          secondLine={dialerLetters[n - 1]}
+          onClick={() => clickHandler(n)}
+        />
+      ))}
+      <Button
+        iconLeft={<ChevronDoubleLeft />}
+        onClick={() => actions.deleteHandler()}
+        title="Remove last character"
+        type="secondary"
+        fullWidth
       />
-    ))}
-    <Button
-      iconLeft={<ChevronDoubleLeft />}
-      onClick={() => onClick(-1)}
-      title="Remove last character"
-      type="secondary"
-      fullWidth
-    />
-  </StyledGrid>
-);
+    </StyledGrid>
+  );
+};
