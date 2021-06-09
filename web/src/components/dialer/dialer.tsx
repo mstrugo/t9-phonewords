@@ -7,7 +7,7 @@ import { DialerButton } from '../dialer-button';
 import { useInputsContext } from '../inputs-context';
 
 const StyledGrid = styled(Grid)`
-  justify-content: center;
+  margin: 0 auto;
 
   button:nth-child(10) {
     grid-column-start: 2;

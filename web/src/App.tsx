@@ -1,4 +1,3 @@
-import Card, { CardSection } from '@kiwicom/orbit-components/lib/Card';
 import Heading from '@kiwicom/orbit-components/lib/Heading';
 import Layout, { LayoutColumn } from '@kiwicom/orbit-components/lib/Layout';
 import { ApolloProvider } from '@apollo/client';
@@ -23,16 +22,12 @@ const App = () => (
         </Heading>
       </StyledHeadingWrapper>
       <InputsContextProvider>
-        <Layout type="Search">
-          <LayoutColumn>
-            <Card>
-              <CardSection>
-                <Inputs />
-              </CardSection>
-            </Card>
-          </LayoutColumn>
+        <Layout type="Booking">
           <LayoutColumn>
             <Output />
+          </LayoutColumn>
+          <LayoutColumn>
+            <Inputs />
           </LayoutColumn>
         </Layout>
       </InputsContextProvider>

@@ -73,7 +73,7 @@ const Output = memo(({ paginateAt = DEFAULT_PAGINATION_AMOUNT }: OutputProps) =>
               {!loading && subset[0] !== '' ? (
                 subset.map(res => (
                   <ListItem key={res} icon={<Check color="tertiary" size="small" />}>
-                    {res} -
+                    {res}
                   </ListItem>
                 ))
               ) : (
