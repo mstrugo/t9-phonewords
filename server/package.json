@@ -10,6 +10,7 @@
     "yarn": "1.22.10"
   },
   "dependencies": {
+    "@types/cached": "^5.0.1",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
     "@types/node": "^10.0.0",
@@ -27,7 +28,6 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/cached": "^5.0.1",
     "@types/jest": "^26.0.23",
     "@types/supertest": "^2.0.11",
     "eslint": "^7.28.0",
